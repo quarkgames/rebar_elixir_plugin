@@ -67,7 +67,8 @@ post_compile(Config, AppFile) ->
 -spec clean(Config::rebar_config:config(), AppFile::file:filename()) -> 'ok'.
 clean(_Config, _AppFile) ->
     BeamFiles = rebar_utils:find_files("ebin", "^.*\\.beam\$"),
-    rebar_file_utils:delete_each(BeamFiles),
+    AppFiles = rebar_utils:find_files("ebin", "^.*\\.app\$"),
+    rebar_file_utils:delete_each(BeamFiles ++ AppFiles),
     lists:foreach(fun(Dir) -> delete_dir(Dir, dirs(Dir)) end, dirs("ebin")),
     ok.
 
